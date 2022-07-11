@@ -1,5 +1,5 @@
 variables:
-  ado_service_connection_aml_ws: Azure-ARM-Dev
+  ado_service_connection: Azure-ARM-Dev
   endpoint_name: <FILL ENDPOINT UNIQUE IDENTIFIER>
   resource_group: <FILL RESOURCE GROUP NAME FOR AML RESOURCE>
   aml_workspace: <FILL AML WORKSPACE NAME>
