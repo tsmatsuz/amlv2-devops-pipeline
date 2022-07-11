@@ -12,7 +12,7 @@ variables:
 #  value: aml-cli-v2 
 - template: ../config.yml
 - name: endpoint_name
-  value: my-online-test-$(endpoint_name)
+  value: my-online-test-$(endpoint_postfix)
 
 trigger:
 - none
@@ -40,7 +40,7 @@ stages:
       - template: ../templates/connect-to-workspace.yml
       - template: ../templates/create-endpoint.yml
         parameters:
-          endpoint_file: ../cliv2-yaml/online-endpoint.yml
+          endpoint_file: cliv2-yaml/online-endpoint.yml
 #      - template: templates/${{ variables.version }}/create-deployment.yml
 #        parameters:
 #          deployment_name: taxi-online-dp
