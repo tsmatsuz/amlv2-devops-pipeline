@@ -1,0 +1,55 @@
+# 今、書いているところ！！！！！！！！！！
+
+variables:
+#- ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+#    # 'main' branch: PRD environment
+#    - template: ../../config-infra-prod.yml
+#- ${{ if ne(variables['Build.SourceBranchName'], 'main') }}:  
+#    # 'develop' or feature branches: DEV environment
+#    - template: ../../../../config-infra-dev.yml
+
+#- name: version
+#  value: aml-cli-v2 
+- template: ../config.yml
+- name: endpoint_name
+  value: my-online-test-$(endpoint_name)
+
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-20.04
+
+#resources:
+#  repositories:
+#    - repository: mlops-templates  # Template Repo
+#      name: Azure/mlops-templates # need to change org name from "Azure" to your own org
+#      endpoint: github-connection # need to set up and hardcode
+#      type: github
+
+stages:
+- stage: CreateOnlineEndpoint
+  displayName: Create/Update Online Endpoint 
+  jobs:
+    - job: DeployOnlineEndpoint
+      steps:
+      - checkout: self
+        path: s/
+      - template: templates/install-az-cli.yml
+      - template: templates/install-aml-cli.yml
+      - template: templates/connect-to-workspace.yml
+      - template: templates/create-endpoint.yml
+        parameters:
+          endpoint_file: cliv2-yaml/online-endpoint.yml
+#      - template: templates/${{ variables.version }}/create-deployment.yml
+#        parameters:
+#          deployment_name: taxi-online-dp
+#          deployment_file: mlops/azureml/deploy/online/online-deployment.yml 
+#      - template: templates/${{ variables.version }}/allocate-traffic.yml
+#        parameters:
+#          traffic_allocation: taxi-online-dp=100
+#      - template: templates/${{ variables.version }}/test-deployment.yml
+#        parameters:
+#          deployment_name: taxi-online-dp
+#          sample_request: data/taxi-request.json
+#          request_type: json
