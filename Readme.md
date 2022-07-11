@@ -5,6 +5,7 @@
 1. [Azure DevOps](https://dev.azure.com/) にログインして、新規プロジェクトを作成、このリポジトリを clone します。
     - サイドメニューから "Repos" を選択します
     - "Import" ボタンを押します
+    - 表示される画面で、"Clone URL" に "https://github.com/tsmatsuz/amlv2-devops-pipeline" と入力して "Import" ボタンを押します
 2. Azure DevOps から Azure に接続する際に使用する Service principal を作成します。
     - Azure にログインして、"Azure Active Dorectory" を選択します
     - サイドメニューから "App registrations" を選択して "New registration" ボタンを押します
@@ -32,4 +33,11 @@
         - Service Principal key : {上記でコピーした service principal の secret 値}
         - Tenant ID : {Service principal を作成した Azure AD の Tenant ID}
         - Service connection name : Azure-ARM-Dev
-5. config.yml を書き換えます
+5. サイドメニューから "Repos" を選択し、config.yml を開いて、必要な値に書き換えます
+6. サイドメニューから "Pipelines" を選択し、下記手順で Pipeline を定義します。
+    - "Create Pipeline" ボタンを押します
+    - "Where is your code?" で "Azure Repos Git" を選択します
+    - "Select a repository" で、上記の clone したコードが入ったプロジェクトを選択します
+    - "Configure your pipeline" で、"Existing Azure Pipelines YAML file" を選択します
+    - 表示される画面で、上記で clone した repository 内の devops-pipelines/deploy-online-endpoint-pipeline.yml を選択します
+    - "Run" ボタンの右の矢印をクリックして "Save" を選択してください (ここでは実行はおこなわず、保存のみをおこないます)
