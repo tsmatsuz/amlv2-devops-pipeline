@@ -1,6 +1,6 @@
-# 【作成中】 Model 登録のトリガーによる Azure Pipeline 実行 (AML CLI v2 による Model のデプロイ)
+# 【作成中】 Azure Pipeline (DevOps) による Continuous Integration (AML CLI v2 による ML Pipeline 実行)
 
-以下の手順に従って設定してください。
+以下の手順に従ってセットアップをおこなってください。
 
 ## 事前準備
 
