@@ -17,7 +17,7 @@
   以下の手順で、このリポジトリを Azure DevOps のプロジェクトに clone します。
     - サイドメニューから "Repos" を選択します
     - "Import" ボタンを押します
-    - 表示される画面で、"Clone URL" に "https://github.com/tsmatsuz/amlv2-devops-pipeline" と入力して "Import" ボタンを押します
+    - 表示される画面で、"Clone URL" に "```https://github.com/tsmatsuz/amlv2-devops-pipeline```" と入力して "Import" ボタンを押します
 2. Azure DevOps から Azure に接続する際に使用する Service principal を作成します。
     - Azure にログインして、"Azure Active Dorectory" を選択します
     - サイドメニューから "App registrations" を選択して "New registration" ボタンを押します
