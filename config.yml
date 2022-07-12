@@ -1,5 +1,4 @@
 variables:
   ado_service_connection: Azure-ARM-Dev
-  endpoint_postfix: <FILL UNIQUE IDENTIFIER FOR ENDPOINT>
   resource_group: <FILL RESOURCE GROUP NAME FOR AML RESOURCE>
   aml_workspace: <FILL AML WORKSPACE NAME>

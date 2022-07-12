@@ -1,0 +1,25 @@
+# 作成中...
+
+variables:
+- template: ../config.yml
+
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-20.04
+
+stages:
+- stage: RunTrainingPipeline
+  displayName: Deploy Training Pipeline
+  jobs:
+    - job: DeployTrainingPipeline
+      steps:
+      - checkout: self
+        path: s/
+      - template: ../templates/install-az-cli.yml
+      - template: ../templates/install-aml-cli.yml
+      - template: ../templates/connect-to-workspace.yml
+      - template: ../templates/run-pipeline.yml
+        parameters: 
+          pipeline_file: cliv2-yaml/pipeline-diabetes.yml

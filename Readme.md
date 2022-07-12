@@ -1,8 +1,20 @@
-# Model 登録のトリガーによる Azure Pipeline 実行 (AML CLI v2 による Model のデプロイ)
+# 【作成中】 Model 登録のトリガーによる Azure Pipeline 実行 (AML CLI v2 による Model のデプロイ)
+
+以下の手順に従って設定してください。
+
+## 事前準備
+
+[OpenHack の diabetes サンプルによる学習処理](https://github.com/notanaha/oh4ml-lite-diabetes) を完了していることを想定しています。<br>
+特に、下記のプロビジョニングを済ませておいてください。(これらのオブジェクトを使用します。)
+
+- Azure Machine Learning (以降、Azure ML) のワークスペースの作成が完了している
+- Azure ML のデータアセットが、「diabetes_data_oh4ml」と「diabetes_query_oh4ml」の名前で登録済である
+- Azure ML の環境 (environment) が「diabetes-env-02」の名前で作成済である
 
 ## Azure Pipeline の登録
 
-1. [Azure DevOps](https://dev.azure.com/) にログインして、新規プロジェクトを作成、このリポジトリを clone します。
+1. [Azure DevOps](https://dev.azure.com/) にログインして、新規プロジェクトを作成します。<br>
+  以下の手順で、このリポジトリを Azure DevOps のプロジェクトに clone します。
     - サイドメニューから "Repos" を選択します
     - "Import" ボタンを押します
     - 表示される画面で、"Clone URL" に "https://github.com/tsmatsuz/amlv2-devops-pipeline" と入力して "Import" ボタンを押します
@@ -33,11 +45,22 @@
         - Service Principal key : {上記でコピーした service principal の secret 値}
         - Tenant ID : {Service principal を作成した Azure AD の Tenant ID}
         - Service connection name : Azure-ARM-Dev
-5. サイドメニューから "Repos" を選択し、config.yml を開いて、必要な値に書き換えます
+5. サイドメニューから "Repos" を選択し、config.yml を開いて、必要な値に書き換えます (編集完了後、コミットします)。
 6. サイドメニューから "Pipelines" を選択し、下記手順で Pipeline を定義します。
     - "Create Pipeline" ボタンを押します
     - "Where is your code?" で "Azure Repos Git" を選択します
     - "Select a repository" で、上記の clone したコードが入ったプロジェクトを選択します
     - "Configure your pipeline" で、"Existing Azure Pipelines YAML file" を選択します
-    - 表示される画面で、上記で clone した repository 内の devops-pipelines/deploy-online-endpoint-pipeline.yml を選択します
+    - 表示される画面で、上記で clone した repository 内の devops-pipelines/deploy-model-training-pipeline.yml を選択します
     - "Run" ボタンの右の矢印をクリックして "Save" を選択してください (ここでは実行はおこなわず、保存のみをおこないます)
+
+> Note : ★★現在作成中...★★
+
+## Model 登録のトリガー定義
+
+ここでは、以下の手順で [Azure DevOps Tasks for Machine Learning](https://marketplace.visualstudio.com/items?itemName=ms-air-aiagility.vss-services-azureml) を使用して Model 登録のトリガーを処理します。
+
+> Note : Event Grid を用いて Azure Machine Learning 上のさまざまなトリガーに応じた処理を構築できます。(詳細は [こちら](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-use-event-grid) を参照)<br>
+> Azure DevOps Tasks for Machine Learning は、現在、Azure ML Python SDK v1 を使用しています。
+
+1. 
