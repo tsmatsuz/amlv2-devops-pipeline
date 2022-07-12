@@ -2,8 +2,12 @@ variables:
 - template: ../config.yml
 
 trigger:
-- master
-- scripts/*
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - scripts
 
 pool:
   vmImage: ubuntu-20.04
