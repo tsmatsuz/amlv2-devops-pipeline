@@ -1,5 +1,3 @@
-# 作成中...
-
 variables:
 - template: ../config.yml
 
