@@ -4,14 +4,15 @@ variables:
 - template: ../config.yml
 
 trigger:
-- none
+- master
+- scripts/*
 
 pool:
   vmImage: ubuntu-20.04
 
 stages:
 - stage: RunTrainingPipeline
-  displayName: Deploy Training Pipeline
+  displayName: Run Training Pipeline
   jobs:
     - job: DeployTrainingPipeline
       steps:

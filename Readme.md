@@ -1,4 +1,4 @@
-# 【作成中】 Azure Pipeline (DevOps) による Continuous Integration (AML CLI v2 による ML Pipeline 実行)
+# Azure Pipeline (DevOps) による MLOps Continuous Integration (AML CLI v2 による ML Pipeline 実行)
 
 以下の手順に従ってセットアップをおこなってください。
 
@@ -9,7 +9,8 @@
 
 - Azure Machine Learning (以降、Azure ML) のワークスペースの作成が完了している
 - Azure ML のデータアセットが、「diabetes_data_oh4ml」と「diabetes_query_oh4ml」の名前で登録済である
-- Azure ML の環境 (environment) が「diabetes-env-02」の名前で作成済である
+- Azure ML のコンピュートクラスターが、「demo-cpucluster1」の名前で作成済である
+- Azure ML の環境 (environment) が、「diabetes-env-02」の名前で作成済である
 
 ## Azure Pipeline の登録
 
@@ -54,13 +55,10 @@
     - 表示される画面で、上記で clone した repository 内の devops-pipelines/deploy-model-training-pipeline.yml を選択します
     - "Run" ボタンの右の矢印をクリックして "Save" を選択してください (ここでは実行はおこなわず、保存のみをおこないます)
 
-> Note : ★★現在作成中...★★
+## Azure Pipeline のトリガー実行
 
-## Model 登録のトリガー定義
+1. サイドメニューから "Repos" を選択し、```scripts/train-diabetes.py``` のソースコードを変更してコミットします。(例 : コメントを追加する、など)
+2. 上記で登録した Azure Pipeline が実行 (Run) されます。
+3. 終了後、モデル「diabetes_model_oh4ml」が登録されていることを確認します。
 
-ここでは、以下の手順で [Azure DevOps Tasks for Machine Learning](https://marketplace.visualstudio.com/items?itemName=ms-air-aiagility.vss-services-azureml) を使用して Model 登録のトリガーを処理します。
-
-> Note : Event Grid を用いて Azure Machine Learning 上のさまざまなトリガーに応じた処理を構築できます。(詳細は [こちら](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-use-event-grid) を参照)<br>
-> Azure DevOps Tasks for Machine Learning は、現在、Azure ML Python SDK v1 を使用しています。
-
-1. 
+> Note : Event Grid を用いて Azure Machine Learning 上のさまざまなトリガーに応じた処理を構築できます。(詳細は [こちら](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-use-event-grid) を参照)
