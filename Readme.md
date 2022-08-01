@@ -17,22 +17,23 @@
 1. [Azure DevOps](https://dev.azure.com/) にログインして、新規プロジェクトを作成します。
 2. 以下の手順で、このリポジトリを Azure DevOps のプロジェクトに clone します。
     - サイドメニューから "Repos" を選択します
-    - "Import" ボタンを押します
+    - "import repository" を選択します
     - 表示される画面の "Clone URL" に "```https://github.com/tsmatsuz/amlv2-devops-pipeline```" と入力して "Import" ボタンを押します
-3. Azure DevOps から Azure に接続する際に使用する Service principal を作成します。
+3. 以下の手順で、Azure DevOps から Azure に接続する際に使用する Service principal を作成します。
     - Azure ポータルにログインして、"Azure Active Dorectory" (以降、Azure AD) を選択します
-    - サイドメニューから "App registrations" を選択して "New registration" ボタンを押します
+    - サイドメニューから "アプリの登録" (App registrations) を選択して "新規登録" (New registration) ボタンを押します
     - 名前を任意に設定し、App の登録をおこないます。<br>
     なお、account type は、今回、"Accounts in this organizational directory only (Microsoft only - Single tenant)" を選択します
     - 表示される App のブレード上の "Application (client) ID" をコピーします (この ID はあとで使用します)
-    - サイドメニューから "Certificate & secrets" を選択して、Client secrets を新規作成します。<br>
+    - サイドメニューから "証明書とシークレット" (Certificate & secrets) を選択して、Client secrets を新規作成します。<br>
     作成された secret の値をコピーします (この secret の値はあとで使用します)
-4. Service principal にロールを割り当てます。
-    - Azure ポータル上で "Subscriptions" のブレードを表示して、利用中のサブスクリプションを選択します
-    - サイドメニューの "Access control (IAM)" を選択します
-    - 表示される画面上の "Add" - "Add role assignment" ボタンを選択します
-    - 上記で作成した service principal に対して、Contributor (共同作成者) のロールを割り当てます
-5. Azure DevOps の Pipeline で使用する Azure 接続を構成します
+4. 以下の手順で、service principal にロールを割り当てます。<br>
+   (今回、サブスクリプション全体に共同作成者のロールを割り当てますが、より厳格に必要な権限のみの割り当ても可能です。)
+    - Azure ポータル上で "サブスクリプション" (Subscriptions) のブレードを表示して、利用中のサブスクリプションを選択します
+    - サイドメニューの "アクセス制御 (IAM)" (Access control) を選択します
+    - 表示される画面上の "追加" (Add) - "ロール割り当ての追加" (Add role assignment) ボタンを選択します
+    - 上記で作成した service principal に対して、共同作成者 (Contributor) のロールを割り当てます
+5. 以下の手順で、Azure DevOps の Pipeline で使用する Azure 接続を構成します
     - Azure DevOps のサイドメニュー下の "Project settings" を選択します
     - 表示されるメニューの "Pipelines" - "Service connections" を選択し、"Create service connection" ボタンを押します
     - 表示される画面で "Azure Resource Manager" を選択して "Next" ボタンを押します
@@ -47,7 +48,7 @@
         - Tenant ID : {Service principal を作成した Azure AD の Tenant ID}
         - Service connection name : Azure-ARM-Dev
 6. サイドメニューから "Repos" を選択して、config.yml を開き、環境にあわせて値を書き換えます (編集完了後、コミットします)。
-7. サイドメニューから "Pipelines" を選択し、下記手順で Pipeline を新規作成します。
+7. 以下の手順で、サイドメニューから "Pipelines" を選択し、下記手順で Pipeline を新規作成します。
     - "Create Pipeline" ボタンを押します
     - "Where is your code?" で "Azure Repos Git" を選択します
     - "Select a repository" で、上記の clone されたリポジトリを選択します
@@ -59,6 +60,6 @@
 
 1. サイドメニューから "Repos" を選択し、```scripts/train-diabetes.py``` のソースコードを変更 (例えば、コメントを追加するなど) してコミットしてください。
 2. ソースのコミットをトリガーとして、上記で登録した Azure Pipeline が実行 (Run) されます。
-3. 終了後、Azure ML 上でモデル「diabetes_model_oh4ml」が登録されていることを確認します。
+3. 終了後、Azure ML 上でモデル「diabetes_model_oh4ml_devops」が登録されていることを確認します。
 
-> Note : Event Grid を用いて Azure Machine Learning 上のさまざまなトリガーに応じた処理を構築できます。(詳細は [こちら](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-use-event-grid) を参照)
+> Note : Event Grid を用いて Azure Machine Learning 上のさまざまなトリガーに応じた処理を構築できます。(詳細は [こちら](https://docs.microsoft.com/en-us/azure/machine-learning/how-to-use-event-grid) を参照してください。)
