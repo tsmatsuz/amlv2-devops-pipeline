@@ -29,7 +29,7 @@ jobs:
   train_model:
     name: train_model
     display_name: train-model
-    code: ./scripts
+    code: ../scripts
     command: >-
       python train-diabetes.py 
       --input_data ${{inputs.diabetes_data}}
@@ -43,7 +43,7 @@ jobs:
   evaluate_model:
     name: evaluate_model
     display_name: evaluate-model
-    code: ./scripts
+    code: ../scripts
     command: >-
       python evaluate.py 
       --experiment_name ${{inputs.experiment_name}} 
@@ -59,7 +59,7 @@ jobs:
   register_model:
     name: register_model
     display_name: register-model
-    code: ./scripts
+    code: ../scripts
     command: >-
       python register.py 
       --model_name ${{inputs.model_name}} 
