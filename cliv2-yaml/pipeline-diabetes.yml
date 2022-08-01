@@ -31,7 +31,7 @@ jobs:
     command: >-
       python train-diabetes.py 
       --input_data ${{inputs.diabetes_data}} 
-      --model_output ${{outputs.model_output}}
+      --output_dir ${{outputs.model_output}}
     environment: azureml:diabetes-env-02@latest
     inputs:
       diabetes_data: ${{parent.inputs.input}}
