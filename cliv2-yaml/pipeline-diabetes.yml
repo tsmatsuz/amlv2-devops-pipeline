@@ -1,10 +1,12 @@
 $schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
 type: pipeline
-experiment_name: diabetes_training_01
+experiment_name: diabetes_training_devops_01
 description: Training Pipeline to train a diabetes model
 
 # <inputs_and_outputs>
 inputs:
+  experiment_name: diabetes_training_devops_01   # this name must be identical to the pipeline experiment_name
+  model_name: diabetes_model_oh4ml_devops
   input: 
     type: uri_file
     path: azureml:diabetes_data_oh4ml@latest
@@ -14,7 +16,7 @@ outputs:
   trained_model:
 #  predictions:
 #  score_report:
-#  deploy_flag:
+  deploy_flag:
 # </inputs_and_outputs>
 
 # <jobs>
@@ -27,10 +29,10 @@ jobs:
   train_model:
     name: train_model
     display_name: train-model
-    code: ../scripts
+    code: ./scripts
     command: >-
       python train-diabetes.py 
-      --input_data ${{inputs.diabetes_data}} 
+      --input_data ${{inputs.diabetes_data}}
       --output_dir ${{outputs.model_output}}
     environment: azureml:diabetes-env-02@latest
     inputs:
@@ -38,10 +40,26 @@ jobs:
     outputs:
       model_output: ${{parent.outputs.trained_model}}
 
+  evaluate_model:
+    name: evaluate_model
+    display_name: evaluate-model
+    code: ./scripts
+    command: >-
+      python evaluate.py 
+      --experiment_name ${{inputs.experiment_name}} 
+      --model_dir ${{inputs.model_dir}} 
+      --deploy_flag ${{outputs.deploy_flag}}
+    environment: azureml:diabetes-env-02@latest
+    inputs:
+      experiment_name: ${{parent.inputs.experiment_name}}
+      model_dir: ${{parent.jobs.train_model.outputs.model_output}}
+    outputs:
+      deploy_flag: ${{parent.outputs.deploy_flag}}
+
   register_model:
     name: register_model
     display_name: register-model
-    code: ../scripts
+    code: ./scripts
     command: >-
       python register.py 
       --model_name ${{inputs.model_name}} 
@@ -49,8 +67,8 @@ jobs:
       --deploy_flag ${{inputs.deploy_flag}}
     environment: azureml:diabetes-env-02@latest
     inputs:
-      model_name: diabetes_model_oh4ml
+      model_name: ${{parent.inputs.model_name}}
       model_path: ${{parent.jobs.train_model.outputs.model_output}}
-      deploy_flag: 1
+      deploy_flag: ${{parent.jobs.evaluate_model.outputs.deploy_flag}}
 
 # </jobs>
